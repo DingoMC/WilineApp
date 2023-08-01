@@ -21,7 +21,7 @@ userRoutes.get("/", (req, res) => {
         res.status(200).send(u)
     }
     catch (error) {
-        res.status(500).send({message: "Failed to fetch data!", error: error})
+        res.status(500).send({message: "Failed to fetch data!"})
     }
 })
 
@@ -32,7 +32,7 @@ userRoutes.get("/:id", (req, res) => {
         else res.status(404).send({message: "User not found!"})
     }
     catch (error) {
-        res.status(500).send({message: "Failed to fetch data!", error: error})
+        res.status(500).send({message: "Failed to fetch data!"})
     }
 })
 
@@ -55,7 +55,7 @@ userRoutes.post("/", (req, res) => {
         else res.status(403).send(validation)
     }
     catch (error) {
-        res.status(500).send({message: "Failed to add user!", error: error})
+        res.status(500).send({message: "Failed to add user!"})
     }
 })
 
@@ -63,10 +63,10 @@ userRoutes.delete("/:id", (req, res) => {
     try {
         let status = DeleteUserById(req.params.id)
         if (status) res.status(200).send(false)
-        else res.status(404).send(true)
+        else res.status(404).send({message: "User not found!"})
     }
     catch (error) {
-        res.status(500).send({message: "Failed to delete user!", error: error})
+        res.status(500).send({message: "Failed to delete user!"})
     }
 })
 
@@ -101,6 +101,6 @@ userRoutes.put("/:id", (req, res) => {
         else res.status(403).send(validation)
     }
     catch (error) {
-        res.status(500).send({message: "Failed to update user!", error: error})
+        res.status(500).send({message: "Failed to update user!"})
     }
 })
