@@ -81,23 +81,27 @@ function compose() {
     let ids = readUserIDs();
     let users = [];
     for (let i = 0; i < ids.length; i++) {
+        let first_name_found = '', last_name_found = '', phone_found = '';
         for (let j = 0; j < names.length; j++) {
             if (ids[i].email === names[j].email) {
-                for (let k = 0; k < phones.length; k++) {
-                    if (ids[i].email === phones[k].email) {
-                        users.push({
-                            _id: ids[i].id,
-                            email: ids[i].email,
-                            firstName: names[j].firstName,
-                            lastName: names[j].lastName,
-                            phoneNumber: primaryPhone(phones[k])
-                        });
-                        break;
-                    }
-                }
+                first_name_found = names[j].firstName;
+                last_name_found = names[j].lastName;
                 break;
             }
         }
+        for (let j = 0; j < phones.length; j++) {
+            if (ids[i].email === phones[j].email) {
+                phone_found = primaryPhone(phones[j]);
+                break;
+            }
+        }
+        users.push({
+            _id: ids[i].id,
+            email: ids[i].email,
+            firstName: first_name_found,
+            lastName: last_name_found,
+            phoneNumber: phone_found
+        });
     }
     return users;
 }
