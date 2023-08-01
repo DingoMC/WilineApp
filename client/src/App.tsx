@@ -63,6 +63,7 @@ function App() {
     for (let i = 0; i < userList.length; i++) {
       elems.push(<User 
         key={userList[i]._id}
+        localKey={(i+1).toString()}
         UserData={userList[i]}
         setErrorMessage={setErrorMessage}
         setInfoMessage={setInfoMessage}
@@ -79,8 +80,13 @@ function App() {
           <span>{infoMessage}</span>
         </div>
       }
-      {errorMessage.length > 0 && <div>Error: {errorMessage}</div>}
-      {!toggleAdd && <button onClick={() => {
+      {errorMessage.length > 0 &&
+        <div className='errorbox'>
+          <img src="svg/error.svg" alt="Error:" />
+          <span>Error: {errorMessage}</span>
+        </div>
+      }
+      {!toggleAdd && <button className='adduser_btn' onClick={() => {
         setToggleAdd(true)
         setErrorMessage('')
         setInfoMessage('')

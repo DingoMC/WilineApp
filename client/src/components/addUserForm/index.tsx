@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import { validateEmail, validateName, validatePhone } from '../../lib/validator';
 import axios from 'axios'
 import { user } from '../user';
+import styles from './styles.module.css';
 
 const AddUserForm = (props: {
     userList: user[]
@@ -38,30 +39,30 @@ const AddUserForm = (props: {
     }
 
     return (
-        <tr>
-            <td></td>
-            <td><input type="text" onChange={(e) => {
+        <tr className={styles.row}>
+            <td><div className={styles.center}><img src="svg/add.svg" alt="+" /></div></td>
+            <td><input className={isValid.firstName ? styles.valid : styles.invalid} type="text" onChange={(e) => {
                 setUserData({...userData, firstName: e.target.value})
                 setIsValid({...isValid, firstName: validateName(e.target.value)})
             }} /></td>
-            <td><input type="text" onChange={(e) => {
+            <td><input className={isValid.lastName ? styles.valid : styles.invalid} type="text" onChange={(e) => {
                 setUserData({...userData, lastName: e.target.value})
                 setIsValid({...isValid, lastName: validateName(e.target.value)})
             }}/></td>
-            <td><input type="text" onChange={(e) => {
+            <td><input className={isValid.email ? styles.valid : styles.invalid} type="text" onChange={(e) => {
                 setUserData({...userData, email: e.target.value})
                 setIsValid({...isValid, email: validateEmail(e.target.value)})
             }}/></td>
-            <td><input type="text" onChange={(e) => {
+            <td><input className={isValid.phoneNumber ? styles.valid : styles.invalid} type="text" onChange={(e) => {
                 setUserData({...userData, phoneNumber: e.target.value})
                 setIsValid({...isValid, phoneNumber: validatePhone(e.target.value)})
             }}/></td>
             <td>
-                <div>
+                <div className={styles.actions}>
                     {
-                        valid && <button onClick={handleUserAdd}>Apply</button>
+                        valid && <button className={styles.btn_apply} onClick={handleUserAdd}>Apply</button>
                     }
-                    <button onClick={() => {
+                    <button className={styles.btn_cancel} onClick={() => {
                         props.setToggleAdd(false)
                         props.setErrorMessage('')
                         props.setInfoMessage('')

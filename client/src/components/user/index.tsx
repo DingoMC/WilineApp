@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react';
 import { validateEmail, validateName, validatePhone } from '../../lib/validator';
+import styles from './styles.module.css';
 
 // User TS Model
 export interface user {
@@ -12,7 +13,8 @@ export interface user {
 }
 
 const User = (props: {
-    UserData : user
+    UserData : user,
+    localKey : string,
     setErrorMessage: React.Dispatch<React.SetStateAction<string>>,
     setInfoMessage: React.Dispatch<React.SetStateAction<string>>,
     handleUserGet: () => Promise<void>
@@ -75,30 +77,35 @@ const User = (props: {
 
     if (editMode) {
         return (
-            <tr>
-                <td></td>
-                <td><input type="text" defaultValue={props.UserData.firstName} onChange={(e) => {
+            <tr className={styles.edit_row}>
+                <td>
+                    <div className={styles.editing}>
+                        <span>{props.localKey}</span>
+                        <img src="svg/edit.svg" alt="E" />
+                    </div>
+                </td>
+                <td><input className={isValid.firstName ? styles.valid : styles.invalid} type="text" defaultValue={props.UserData.firstName} onChange={(e) => {
                     setNewUserData({...newUserData, firstName: e.target.value})
                     setIsValid({...isValid, firstName: validateName(e.target.value)})
                 }} /></td>
-                <td><input type="text" defaultValue={props.UserData.lastName} onChange={(e) => {
+                <td><input className={isValid.lastName ? styles.valid : styles.invalid} type="text" defaultValue={props.UserData.lastName} onChange={(e) => {
                     setNewUserData({...newUserData, lastName: e.target.value})
                     setIsValid({...isValid, lastName: validateName(e.target.value)})
                 }} /></td>
-                <td><input type="text" defaultValue={props.UserData.email} onChange={(e) => {
+                <td><input className={isValid.email ? styles.valid : styles.invalid} type="text" defaultValue={props.UserData.email} onChange={(e) => {
                     setNewUserData({...newUserData, email: e.target.value})
                     setIsValid({...isValid, email: validateEmail(e.target.value)})
                 }} /></td>
-                <td><input type="text" defaultValue={props.UserData.phoneNumber} onChange={(e) => {
+                <td><input className={isValid.phoneNumber ? styles.valid : styles.invalid} type="text" defaultValue={props.UserData.phoneNumber} onChange={(e) => {
                     setNewUserData({...newUserData, phoneNumber: e.target.value})
                     setIsValid({...isValid, phoneNumber: validatePhone(e.target.value)})
                 }} /></td>
                 <td>
-                    <div>
+                    <div className={styles.actions}>
                         { valid &&
-                            <button onClick={handleUserUpdate}>Apply</button>
+                            <button className={styles.btn_apply} onClick={handleUserUpdate}>Apply</button>
                         }
-                        <button onClick={() => {
+                        <button className={styles.btn_cancel} onClick={() => {
                             setEditMode(false)
                         }}>Cancel</button>
                     </div>
@@ -106,19 +113,23 @@ const User = (props: {
             </tr>
         )
     }
+    const displayData = (data : string) => {
+        if (data.length > 0) return <span>{data}</span>
+        else return <span className={styles.empty}>Not Set</span>
+    }
     return (
-        <tr>
-            <td></td>
-            <td>{props.UserData.firstName}</td>
-            <td>{props.UserData.lastName}</td>
-            <td>{props.UserData.email}</td>
-            <td>{props.UserData.phoneNumber}</td>
+        <tr className={styles.row}>
+            <td>{displayData(props.localKey)}</td>
+            <td>{displayData(props.UserData.firstName)}</td>
+            <td>{displayData(props.UserData.lastName)}</td>
+            <td>{displayData(props.UserData.email)}</td>
+            <td>{displayData(props.UserData.phoneNumber)}</td>
             <td>
-                <div>
-                    <button onClick={() => {
+                <div className={styles.actions}>
+                    <button className={styles.btn_edit} onClick={() => {
                         setEditMode(true)
                     }}>Edit</button>
-                    <button onClick={() => {
+                    <button className={styles.btn_delete} onClick={() => {
                         if (window.confirm('Are You sure You want to delete this user?')) handleUserDelete()
                     }}>Delete</button>
                 </div>

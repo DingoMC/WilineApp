@@ -79,5 +79,14 @@
 				"value": "202-555-0143"
 			}
 		]
+	},
+	{
+		"email": "martin701-2001@wp.pl",
+		"phoneNumbers": [
+			{
+				"type": "primary",
+				"value": "123-456-7890"
+			}
+		]
 	}
 ]

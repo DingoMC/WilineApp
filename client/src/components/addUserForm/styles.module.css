@@ -1,0 +1,56 @@
+.row > td{
+    padding: 0.2rem 0.5rem;
+    background-color: rgba(55, 255, 55, 0.1);
+}
+.row .center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.row img {
+    max-height: 1.25rem;
+}
+.row input {
+    border-radius: 0.3rem;
+    padding: 0.2rem 0.2rem;
+    outline: none !important;
+}
+.row input.invalid {
+    background-color: rgba(255, 55, 55, 0.2);
+    border: 1px solid rgb(80, 35, 35);
+}
+.row input.valid {
+    background-color: rgba(55, 255, 55, 0.2);
+    border: 1px solid rgb(35, 80, 35);
+}
+.actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 0.4rem;
+}
+.actions button {
+    font-size: 0.9rem;
+    border-radius: 0.3rem;
+    padding: 0.2rem 0.4rem;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+.btn_apply {
+    background-color: rgba(55, 255, 55, 0.25);
+    border: 1px solid #007700;
+    color: #005500;
+}
+.btn_apply:hover {
+    background-color: rgba(35, 205, 35, 0.45);
+    color: #eeffee;
+}
+.btn_cancel {
+    background-color: rgba(255, 55, 55, 0.25);
+    border: 1px solid #770000;
+    color: #550000;
+}
+.btn_cancel:hover {
+    background-color: rgba(205, 35, 35, 0.45);
+    color: #eeffee;
+}

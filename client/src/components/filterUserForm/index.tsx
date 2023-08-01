@@ -1,6 +1,7 @@
 import { user } from '../user';
 import {useEffect, useState} from 'react';
 import axios from 'axios'
+import styles from './styles.module.css';
 
 const FilterUserForm = (props : {
     userList: user[],
@@ -35,22 +36,22 @@ const FilterUserForm = (props : {
     }
 
     return (
-        <tr>
+        <tr className={styles.row}>
+            <td><div className={styles.center}><img src="svg/filter.svg" alt="F" /></div></td>
             <td></td>
             <td></td>
-            <td></td>
-            <td><input type="text" value={filters.email} onChange={(e) => 
+            <td><input className={filters.email.length > 0 ? styles.filled : ''} type="text" value={filters.email} onChange={(e) => 
                 setFilters({...filters, email: e.target.value})
             }/></td>
-            <td><input type="text" value={filters.phoneNumber} onChange={(e) => {
+            <td><input className={filters.phoneNumber.length > 0 ? styles.filled : ''} type="text" value={filters.phoneNumber} onChange={(e) => {
                 setFilters({...filters, phoneNumber: e.target.value})
             }}/></td>
             <td>
-                <div>
+                <div className={styles.actions}>
                     { notEmpty &&
-                        <button onClick={handleUserFilter}>Apply</button>
+                        <button className={styles.btn_apply} onClick={handleUserFilter}>Apply</button>
                     }
-                    <button onClick={() => {
+                    <button className={styles.btn_reset} onClick={() => {
                         props.handleUserGet()
                         setFilters({email: '', phoneNumber: ''})
                     }}>Reset</button>

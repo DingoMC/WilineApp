@@ -1,0 +1,54 @@
+.row > td {
+    padding: 0.2rem 0.5rem;
+    background-color: rgba(55, 55, 255, 0.1);
+}
+.row .center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.row img {
+    max-height: 1.25rem;
+}
+.row input {
+    background-color: rgba(55, 55, 225, 0.2);
+    border: 1px solid rgb(55, 55, 255);
+    border-radius: 0.3rem;
+    padding: 0.2rem 0.2rem;
+    outline: none !important;
+}
+.row input.filled {
+    background-color: rgba(128, 170, 80, 0.5);
+    border: 1px solid rgb(35, 128, 80);
+}
+.actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 0.4rem;
+}
+.actions button {
+    font-size: 0.9rem;
+    border-radius: 0.3rem;
+    padding: 0.2rem 0.4rem;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+.btn_reset {
+    background-color: rgba(255, 165, 55, 0.25);
+    border: 1px solid #886600;
+    color: #442200;
+}
+.btn_reset:hover {
+    background-color: rgba(255, 165, 35, 0.45);
+    color: #ffeeee;
+}
+.btn_apply {
+    background-color: rgba(55, 175, 255, 0.25);
+    border: 1px solid #004488;
+    color: #002266;
+}
+.btn_apply:hover {
+    background-color: rgba(35, 125, 205, 0.45);
+    color: #ddeeff;
+}

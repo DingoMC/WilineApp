@@ -1,0 +1,78 @@
+.row > td, .edit_row > td {
+    padding: 0.1rem 0.5rem;
+}
+.empty {
+    font-style: italic;
+    animation: empty_blink 5s linear 2s infinite alternate;
+}
+@keyframes empty_blink {
+    from {color: #787878;}
+    to {color: #aa2323;}
+}
+.edit_row > td {
+    padding: 0.2rem 0.5rem;
+    background-color: rgba(255, 255, 55, 0.2);
+}
+.editing {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    column-gap: 0.25rem;
+}
+.editing img {
+    max-height: 1.25rem;
+}
+.edit_row input {
+    border-radius: 0.3rem;
+    padding: 0.2rem 0.2rem;
+    outline: none !important;
+}
+.edit_row input.invalid {
+    background-color: rgba(255, 55, 55, 0.2);
+    border: 1px solid rgb(80, 35, 35);
+}
+.edit_row input.valid {
+    background-color: rgba(55, 255, 55, 0.2);
+    border: 1px solid rgb(35, 80, 35);
+}
+.actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 0.4rem;
+}
+.actions button {
+    font-size: 0.9rem;
+    border-radius: 0.3rem;
+    padding: 0.2rem 0.4rem;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+.btn_edit {
+    background-color: rgba(255, 255, 55, 0.35);
+    border: 1px solid #888800;
+    color: #444400;
+}
+.btn_edit:hover {
+    background-color: rgba(255, 255, 35, 0.55);
+    color: #888822;
+}
+.btn_apply {
+    background-color: rgba(55, 255, 55, 0.25);
+    border: 1px solid #007700;
+    color: #005500;
+}
+.btn_apply:hover {
+    background-color: rgba(35, 205, 35, 0.45);
+    color: #eeffee;
+}
+.btn_cancel, .btn_delete {
+    background-color: rgba(255, 55, 55, 0.25);
+    border: 1px solid #770000;
+    color: #550000;
+}
+.btn_cancel:hover, .btn_delete:hover {
+    background-color: rgba(205, 35, 35, 0.45);
+    color: #eeffee;
+}
