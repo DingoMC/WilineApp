@@ -115,11 +115,28 @@ function decomposeDelete(user) {
     deleteUserPhone(user.email);
     deleteUserID(user.email);
 }
+function filterCompare(value, pattern) {
+    // Only * means eveything which is always true
+    if (pattern === '*')
+        return true;
+    // No special pattern
+    if (pattern.indexOf('*') === -1)
+        return (value === pattern);
+    // * in the beginning - Check suffix
+    if (pattern.indexOf('*') === 0)
+        return (value.endsWith(pattern.substring(1)));
+    // * in the end - Check prefix
+    if (pattern.indexOf('*') === pattern.length - 1)
+        return (value.startsWith(pattern.substring(0, pattern.length - 1)));
+    // * in the middle - Check both prefix and suffix
+    return (value.startsWith(pattern.substring(0, pattern.indexOf('*'))) &&
+        value.endsWith(pattern.substring(pattern.indexOf('*') + 1)));
+}
 function filterMatches(value, filter_value) {
     if (typeof filter_value === 'string')
-        return (filter_value === value);
+        return filterCompare(value, filter_value);
     for (let i = 0; i < filter_value.length; i++) {
-        if (value === filter_value[i])
+        if (filterCompare(value, filter_value[i]))
             return true;
     }
     return false;
