@@ -11,15 +11,19 @@ const AddUserForm = (props: {
     setErrorMessage: React.Dispatch<React.SetStateAction<string>>,
     setInfoMessage: React.Dispatch<React.SetStateAction<string>>
 }) => {
-
+    // New user data
     const [userData, setUserData] = useState({firstName: '', lastName: '', email: '', phoneNumber: ''})
+    // New data validation
     const [isValid, setIsValid] = useState({firstName: false, lastName: false, email: false, phoneNumber: false})
+    // True if every field has been validated
     const [valid, setValid] = useState(false)
 
+    // AND operation on all fields validation
     useEffect(() => {
         setValid(isValid.email && isValid.firstName && isValid.lastName && isValid.phoneNumber)
     }, [isValid])
 
+    // Send POST to Server
     const handleUserAdd = async () => {
         axios.post('http://localhost:3001/users', userData)
         .then((response) => {
@@ -38,6 +42,7 @@ const AddUserForm = (props: {
         })
     }
 
+    // Add user row
     return (
         <tr className={styles.row}>
             <td><div className={styles.center}><img src="svg/add.svg" alt="+" /></div></td>

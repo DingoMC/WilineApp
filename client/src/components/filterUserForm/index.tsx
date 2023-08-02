@@ -11,13 +11,17 @@ const FilterUserForm = (props : {
     handleUserGet: () => Promise<void>
 }) => {
 
+    // Filters
     const [filters, setFilters] = useState({email: '', phoneNumber: ''})
+    // True if any of the filters has been filled
     const [notEmpty, setNotEmpty] = useState(false)
 
+    // Check if email or phone filter is set
     useEffect(() => {
         setNotEmpty(filters.email.length > 0 || filters.phoneNumber.length > 0)
     }, [filters])
 
+    // Get all users with filtering
     const handleUserFilter = async () => {
         axios.get('http://localhost:3001/users', {params: filters})
         .then((response) => {
@@ -35,6 +39,7 @@ const FilterUserForm = (props : {
         })
     }
 
+    // Filter row
     return (
         <tr className={styles.row}>
             <td><div className={styles.center}><img src="svg/filter.svg" alt="F" /></div></td>
@@ -52,7 +57,7 @@ const FilterUserForm = (props : {
                         <button className={styles.btn_apply} onClick={handleUserFilter}>Apply</button>
                     }
                     <button className={styles.btn_reset} onClick={() => {
-                        props.handleUserGet()
+                        props.handleUserGet() // On reset load all users
                         setFilters({email: '', phoneNumber: ''})
                     }}>Reset</button>
                 </div>

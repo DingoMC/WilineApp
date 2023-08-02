@@ -20,23 +20,28 @@ const User = (props: {
     handleUserGet: () => Promise<void>
 }) => {
 
+    // Edit Mode Toggle
     const [editMode, setEditMode] = useState(false)
+    // New User Data from Edit Mode
     const [newUserData, setNewUserData] = useState({
         firstName: props.UserData.firstName,
         lastName: props.UserData.lastName,
         email: props.UserData.email,
         phoneNumber: props.UserData.phoneNumber})
+    // Booleans for checking User Data
     const [isValid, setIsValid] = useState({
         firstName: validateName(props.UserData.firstName),
         lastName: validateName(props.UserData.lastName),
         email: validateEmail(props.UserData.email),
         phoneNumber: validatePhone(props.UserData.phoneNumber)})
+    // True if every field in edit mode has been validated
     const [valid, setValid] = useState(false)
-
+    // AND operation on all fields validation
     useEffect(() => {
         setValid(isValid.email && isValid.firstName && isValid.lastName && isValid.phoneNumber)
     }, [isValid])
 
+    // Send DELETE to Server
     const handleUserDelete = async () => {
         axios.delete('http://localhost:3001/users/' + props.UserData._id)
         .then((response) => {
@@ -53,6 +58,7 @@ const User = (props: {
         })
     }
 
+    // Send PUT to Server
     const handleUserUpdate = async () => {
         axios.put('http://localhost:3001/users/' + props.UserData._id, {
             firstName: newUserData.firstName,
@@ -75,6 +81,7 @@ const User = (props: {
         })
     }
 
+    // User row in edit mode
     if (editMode) {
         return (
             <tr className={styles.edit_row}>
@@ -113,10 +120,14 @@ const User = (props: {
             </tr>
         )
     }
+
+    // Display data (if blank it blinks with `Not Set`)
     const displayData = (data : string) => {
         if (data.length > 0) return <span>{data}</span>
         else return <span className={styles.empty}>Not Set</span>
     }
+
+    // User row (normal)
     return (
         <tr className={styles.row}>
             <td>{displayData(props.localKey)}</td>
@@ -130,6 +141,7 @@ const User = (props: {
                         setEditMode(true)
                     }}>Edit</button>
                     <button className={styles.btn_delete} onClick={() => {
+                        // Confirm before delete
                         if (window.confirm('Are You sure You want to delete this user?')) handleUserDelete()
                     }}>Delete</button>
                 </div>

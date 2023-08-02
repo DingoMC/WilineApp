@@ -18,6 +18,7 @@ function App() {
   // Toggle filterUser form
   const [toggleFilter, setToggleFilter] = useState(true)
 
+  // Get all users
   const handleUserGet = async () => {
     axios.get('http://localhost:3001/users')
     .then((response) => {
@@ -34,14 +35,16 @@ function App() {
     })
   }
 
-  // Load all users on first render
+  // Load all users on first render or when new user has been added
   useEffect(() => {
     handleUserGet()
     setToggleFilter(!toggleAdd)
   }, [toggleAdd])
 
+  // Create main table
   const generateRows = () => {
     let elems : JSX.Element[] = []
+    // Filtering row
     if (toggleFilter) elems.push(
       <FilterUserForm
         key={"filterUser"}
@@ -51,6 +54,7 @@ function App() {
         setErrorMessage={setErrorMessage}
         handleUserGet={handleUserGet}/>
     )
+    // User add row
     if (toggleAdd) elems.push(
       <AddUserForm 
         key={"addUser"}
@@ -60,6 +64,7 @@ function App() {
         setErrorMessage={setErrorMessage}
         setInfoMessage={setInfoMessage}/>
     )
+    // User row
     for (let i = 0; i < userList.length; i++) {
       elems.push(<User 
         key={userList[i]._id}
