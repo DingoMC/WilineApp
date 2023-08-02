@@ -14,7 +14,8 @@ const port = process.env.PORT;
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 app.use(express_1.default.urlencoded({ extended: true }));
-app.use("/users", user_1.userRoutes);
+app.use("/users", user_1.userRoutes); // Routes group
+// Testing route
 app.get('/', (req, res) => {
     res.send('If You are seeing this, the server is working properly!');
 });

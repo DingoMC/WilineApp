@@ -13,7 +13,9 @@ app.use(express.json())
 app.use(cors())
 app.use(express.urlencoded({extended: true}))
 
-app.use("/users", userRoutes)
+app.use("/users", userRoutes) // Routes group
+
+// Testing route
 app.get('/', (req, res) => {
     res.send('If You are seeing this, the server is working properly!')
 })

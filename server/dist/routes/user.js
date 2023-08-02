@@ -1,14 +1,21 @@
 "use strict";
+/**
+ * This file contains endpoints to /users
+ * Bad requests are standarized to contain error data in form {message: string}
+ */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.userRoutes = void 0;
 const express_1 = require("express");
 const user_controller_1 = require("../controllers/user_controller");
 exports.userRoutes = (0, express_1.Router)();
+// GET /users
 exports.userRoutes.get("/", (req, res) => {
     try {
-        let filters = [];
+        let filters = []; // Filter Array
+        // Get params from query
         let email = req.query.email;
         let phoneNumber = req.query.phoneNumber;
+        // Add params to filter list
         if (email !== undefined) {
             if (typeof email === 'string' && email.length > 0)
                 filters.push({ field: 'email', value: email });
@@ -21,13 +28,14 @@ exports.userRoutes.get("/", (req, res) => {
             else if (phoneNumber.length > 0)
                 filters.push({ field: 'phoneNumber', value: phoneNumber });
         }
-        let u = (0, user_controller_1.GetUsers)(filters);
+        let u = (0, user_controller_1.GetUsers)(filters); // Fetch users
         res.status(200).send(u);
     }
     catch (error) {
         res.status(500).send({ message: "Failed to fetch data!" });
     }
 });
+// GET /users/{id}
 exports.userRoutes.get("/:id", (req, res) => {
     try {
         let u = (0, user_controller_1.GetUserById)(req.params.id);
@@ -40,9 +48,11 @@ exports.userRoutes.get("/:id", (req, res) => {
         res.status(500).send({ message: "Failed to fetch data!" });
     }
 });
+// POST /users
 exports.userRoutes.post("/", (req, res) => {
     try {
-        let uid = (0, user_controller_1.generateUID)();
+        let uid = (0, user_controller_1.generateUID)(); // Generate unique Hex uid
+        // Gather data from request body and correct it (needed only when using the endpoint directly)
         let email = req.body.email;
         email = email.toLowerCase();
         let firstName = req.body.firstName;
@@ -51,6 +61,7 @@ exports.userRoutes.post("/", (req, res) => {
         lastName = (0, user_controller_1.capitalizeFirst)(lastName);
         let phoneNumber = req.body.phoneNumber;
         let u = { _id: uid, email: email, firstName: firstName, lastName: lastName, phoneNumber: phoneNumber };
+        // Backend validation (needed only when using the endpoint directly)
         let validation = (0, user_controller_1.validate)(u);
         if (validation === null) {
             (0, user_controller_1.InsertUser)(u);
@@ -63,6 +74,7 @@ exports.userRoutes.post("/", (req, res) => {
         res.status(500).send({ message: "Failed to add user!" });
     }
 });
+// DELETE /users/{id}
 exports.userRoutes.delete("/:id", (req, res) => {
     try {
         let status = (0, user_controller_1.DeleteUserById)(req.params.id);
@@ -75,10 +87,12 @@ exports.userRoutes.delete("/:id", (req, res) => {
         res.status(500).send({ message: "Failed to delete user!" });
     }
 });
+// PUT /users/{id}
 exports.userRoutes.put("/:id", (req, res) => {
     try {
         let uid = req.params.id;
         let user = (0, user_controller_1.GetUserById)(uid);
+        // Gather data from request body and correct it (needed only when using the endpoint directly)
         if (req.body.email !== undefined) {
             let email = req.body.email;
             email = email.toLowerCase();
@@ -98,6 +112,7 @@ exports.userRoutes.put("/:id", (req, res) => {
             let phoneNumber = req.body.phoneNumber;
             user.phoneNumber = phoneNumber;
         }
+        // Backend validation (needed only when using the endpoint directly)
         let validation = (0, user_controller_1.validate)(user);
         if (validation === null) {
             (0, user_controller_1.UpdateUserById)(uid, user);
